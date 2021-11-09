@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link href="css/mycss.css" rel="stylesheet" >
     <script src="js/myfunctions.js"></script>
     <title>Exercise 2 - Internet Programming Course template 2</title>
 </head>
@@ -23,15 +24,15 @@
 
     <form>
         <div class="mb-3" style="text-align: left">
-            <label for="exampleInputEmail1" class="form-label">Tittle</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <label for="title" class="form-label">Title</label>
+            <label for="inputTitle"></label><input type="text" class="form-control" id="inputTitle" aria-describedby="title">
 
-            <div id="emailHelp" class="form-text"> </div>
+            <div id="title" class="form-text"> </div>
         </div>
         <div class="mb-3" style="text-align: left">
-            <label for="exampleInputPassword1" class="form-label">Description </label>
+            <label for="description" class="form-label">Description </label>
 
-            <input type="text" class="form-control" id="exampleInputPassword1"
+            <input type="text" class="form-control" id="description"
                    placeholder="type your to-do here">
         </div>
         <div class="mb-3 form-check" style="text-align: left">
@@ -40,6 +41,7 @@
         </div>
         <div class="mb-3" style="text-align: left">
         <button type="submit" class="btn btn-light">add</button>
+        </div>
     </form>
 
 
