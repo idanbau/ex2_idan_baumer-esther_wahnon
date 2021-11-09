@@ -9,9 +9,44 @@
     <title>Exercise 2 - Internet Programming Course template 2</title>
 </head>
 <body>
-<p>
-This is your exercise main page.
-    </p>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+<div  style="text-align:center" class="container-fluid "  >
+<img src="images/imagework.png" class="img-fluid" style="max-width:60%;" alt="to-do list">
+<h1 class="text-center">my TODO list</h1>
+<div class="text-center">Internet Programming course</div>
+
+<p></p>
+    <div class="container">
+        <button id="compact">Show High Priority</button>
+        <button id="details">Sort</button>
+
+    </div>
+
+    <form>
+        <div class="mb-3" style="text-align: left">
+            <label for="exampleInputEmail1" class="form-label">Tittle</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+            <div id="emailHelp" class="form-text"> </div>
+        </div>
+        <div class="mb-3" style="text-align: left">
+            <label for="exampleInputPassword1" class="form-label">Description </label>
+
+            <input type="text" class="form-control" id="exampleInputPassword1"
+                   placeholder="type your to-do here">
+        </div>
+        <div class="mb-3 form-check" style="text-align: left">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">High Priority</label>
+        </div>
+        <div class="mb-3" style="text-align: left">
+        <button type="submit" class="btn btn-light">add</button>
+    </form>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHe
+qEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+    crossorigin="anonymous"></script>
+</div>
 </body>
 </html>
