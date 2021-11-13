@@ -1,37 +1,36 @@
+'use strict';
 
+let Task = class {
+    constructor(title, description, highPriority){
+        this.title = title;
+        this.description = description;
+        this.highPriority = highPriority;
+    }
 
-document.addEventListener('DOMContentLoaded', () =>
-{
-    document.querySelector("button ").addEventListener("click", createItem);
-});
-
-function deleteItem(event)
-{
-
-    this.parentElement.remove();
 }
 
-function createItem()
-{
-    let list = document.getElementById("list1") ;
-
-    // create and insert the <li> item using DOM functions (method 1)
-    let newitem = document.createElement("li");
-    // read input text and create the text node
-    let newtext = document.createTextNode(document.getElementById("user-input").value);
-    newitem.appendChild(newtext);
-
-    // add the X button next to the new item
-    let b = document.createElement("button");
-    b.innerHTML = "<span> X </span>"; //insert  manually HTML string (method 2)
-
-    newitem.appendChild(b);
-
-    b.addEventListener('click', deleteItem); // removeListener
-
-    list.appendChild(newitem); // attach the new item
-}
+let tasks = []
 
 
 
+let addTask = function(){
+    let task = new Task(document.getElementById("title").value, document.getElementById("description").value,
+        document.getElementById("highPriority").value);
+    tasks.push(task);
+    let list = document.getElementById("cardsList");
+    let a = document.createElement("li");
+    a.className("card");
+    a.innerHTML = "<div class=\"card-header\">\n" +
+                       task.title +
+        "            </div>\n" +
+        "            <div class=\"card-body\">\n" +
+        "                <h5 class=\"card-title\">Special title treatment</h5>\n" +
+        "                <p class=\"card-text\">With supporting text below as a natural lead-in to additional content.</p>\n" +
+        "                <a href=\"#\" class=\"btn btn-primary\">Go somewhere</a>\n" +
+        "            </div>";
+    list.appendChild(a);
+    }
 
+document.addEventListener('DOMContentLoaded', ()=>{
+    document.getElementById("addTask").addEventListener("click", addTask)
+})

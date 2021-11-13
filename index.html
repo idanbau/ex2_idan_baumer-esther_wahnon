@@ -5,13 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 
-    <link href="css/mycss.css" rel="stylesheet" >
+    <link href="css/mycss.css" rel="stylesheet">
     <script src="js/myfunctions.js"></script>
-
-    <title>Exercise 2 - Internet Programming Course template 2</title>
+    <title>Exercise 2</title>
 </head>
 
 
@@ -19,69 +17,69 @@
 
 
 
-<div  style="text-align:center" class="container-fluid "  >
-<img src="images/imagework.png" class="img-fluid" style="max-width:60%;" alt="to-do list">
-<h1 class="text-center">my TODO list</h1>
-<div class="text-center">Internet Programming course</div>
+<div  style="text-align:center" class="container-fluid ">
+    <img src="images/imagework.png" class="img-fluid" style="max-width:60%;" alt="to-do list">
+    <h1 class="text-center">my TODO list</h1>
+    <div class="text-center">Internet Programming course</div>
 
-<p></p>
     <div class="container">
         <button id="compact">Show High Priority</button>
         <button id="details">Sort</button>
-
     </div>
-
-    <form>
-
-
-        <div class="mb-3" style="text-align: left">
+</div>
+<form>
 
 
-
-            <label for="description" class="form-label"> Type </label>
-
-            <input type="text" class="form-control"
-                   id="user-input"><br/>
-
-
-        </div>
-
-        <div class="mb-3" style="text-align: left">
-
-
-
-            <label for="description" class="form-label">Description </label>
-
-            <input type="text" class="form-control" id="description"
-                   placeholder="type your to-do here">
-
-        </div>
-
-        <div class="mb-3 form-check" style="text-align: left">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">High Priority</label>
-        </div>
-        <div class="mb-3" style="text-align: left">
-            </p>
-
-            <button>Add</button>
-
-
+<div class="mb-3" style="text-align: left">
+    <label for="title" class="form-label"> Title </label>
+    <input type="text" class="form-control" id="title"><br/>
 </div>
 
-    </form>
-
-
-
-
-
+<div class="mb-3" style="text-align: left">
+    <label for="description" class="form-label">Description </label>
+    <input type="text" class="form-control" id="description"
+           placeholder="type your to-do here">
 </div>
 
+<div class="mb-3 form-check" style="text-align: left">
+    <input type="checkbox" class="form-check-input" id="highPriority">
+    <label class="form-check-label" for="highPriority">High Priority</label>
+</div>
+<button id="addTask">Add</button>
+
+</form>
+
+    <ul id="cardsList">
+        <li class="card">
+            <div class="card-header">
+                Featured
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </li>
 
 
+<!--        <li class="card">-->
+<!--            <h5 class="card-header">Featured</h5>-->
+<!--            <div class="card-body">-->
+<!--                <h5 class="card-title">Special title treatment</h5>-->
+<!--                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+<!--                <a href="#" class="btn btn-primary">Go somewhere</a>-->
+<!--            </div>-->
+<!--        </li>-->
+<!--        <li class="card">-->
+<!--            <h5 class="card-header">Featured</h5>-->
+<!--            <div class="card-body">-->
+<!--                <h5 class="card-title">Special title treatment</h5>-->
+<!--                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+<!--                <a href="#" class="btn btn-primary">Go somewhere</a>-->
+<!--            </div>-->
+<!--        </li>-->
+    </ul>
 
-<ol id="list1">
-</ol>
 
 </body>
 
