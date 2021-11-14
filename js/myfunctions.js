@@ -1,84 +1,83 @@
 'use strict';
 
+// define our namespace :
+// we write an anonymous function that builds and returns an object
+// that encapsulates what we want to publish
+let listModule = ( () => {
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById("addTaskBtn").addEventListener("click", createItem);
+    // private/hidden members: an array of courses and a string of the HTML to display
+    let tasks = [];
+
+    // this is the object we want to return (anything we add will be public/visible)
+    // we're going to add methods and a class definition
+    let publicData = {}
+
+    // sample private/hidden method
+    function separator() {
+        return (", ");
+    }
+
+    // add more public method
+    publicData.addTask = function (task) {
+        tasks.push(task);
+    }
+
+    // add more public method
+    // here we build the HTML using the printFunc for a single course
+    publicData.buildHTMLTaskList = function (printTitle, printDescription) {
+        let result = "<h2>List of Tasks</h2><ol>";
+        for (let t of tasks) {
+            result += "<div class=\"card\"" +
+                "<div class=\"card-body\">" +
+                "<h5 className=\"card-title\">" + printTitle(t)+
+                "<p className=\"card-text\">" + printDescription(t);
+        }
+        result += "</ol><br>";
+        return result;
+    }
+
+    // we are also defining a class in that namespace !
+    // don't forget to name your classes with a UPPER CASE letter at the begining ("Course" and not "course")
+
+    publicData.Task = class Task {
+        constructor(title, description) {
+            this.title = title;
+            this.description = description;
+        }
+
+    }
+
+    // we return the object containing the 'public' functions
+    return publicData;
+
+}) ();  // end of definition and building of our namespace - pay attention to the () here
+
+//create a couple print functions strategies
+function printTitle(task) {
+    return task.title;
+}
+
+function printDescription(task) {
+    return task.description;
+}
+
+// TESTING OUR CODE
+// initialize the array of courses
+
+// PREPARE THE BUTTONS LISTENERS for testing
+// wait for the DOM before reaching elements
+document.addEventListener('DOMContentLoaded', (event) => {
+
+/*    document.getElementById("compact").addEventListener('click', function () {
+        document.getElementById("clist").innerHTML = listModule.buildHTMLCourseList(printCompact);
+    });
+
+    document.getElementById("details").addEventListener('click', function () {
+        document.getElementById("clist").innerHTML = listModule.buildHTMLCourseList(printFullDetails);
+    });*/
+    document.getElementById("addTaskBtn").addEventListener('click', function() {
+        listModule.addTask(new listModule.Task(document.getElementById("inputTitle").value,
+            document.getElementById("inputDescription").value));
+        document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList(printTitle, printDescription);
+    });
 });
-
-// delete the item of corresponding <li>
-function deleteItem(event) {
-    // NOTE THAT:
-    // event.target == this
-
-    // You could write this:
-    // this.parentElement.parentElement.removeChild(this.parentElement);
-    // or simply that:
-    this.parentElement.remove();
-}
-
-function createItem() {
-    var list = document.getElementById("list1");
-
-    // create and insert the <li> item using DOM functions (method 1)
-    var newitem = document.createElement("li");
-    // read input text and create the text node
-    var newtext = document.createTextNode(document.getElementById("inputTitle").value);
-    newitem.appendChild(newtext);
-
-    // add the X button next to the new item
-    var b = document.createElement("button");
-    b.innerHTML = "<span> X </span>"; //insert  manually HTML string (method 2)
-
-    newitem.appendChild(b);
-
-    b.addEventListener('click', deleteItem); // removeListener
-
-    list.appendChild(newitem); // attach the new item
-}
-/*
-
-let Task = class {
-    constructor(title, description, highPriority){
-        this.title = title;
-        this.description = description;
-        this.highPriority = highPriority;
-    }
-}
-
-let tasks = []
-
-function createItem() {
-    var list = document.getElementById("list1") ;
-
-    // create and insert the <li> item using DOM functions (method 1)
-    var newitem = document.createElement("li");
-    // read input text and create the text node
-    var newtext = document.createTextNode("check");
-    newitem.appendChild(newtext);
-    list.appendChild(newitem); // attach the new item
-}
-
-
-function addTask(){
-/!*    let task = new Task(document.getElementById("title").value, document.getElementById("description").value,
-        document.getElementById("highPriority").value);
-    tasks.push(task);*!/
-    let list = document.getElementById("cardsList");
-    let a = document.createElement("li");
-    let varText = document.createTextNode("sometext");
-    a.appendChild(varText);
-    list.appendChild(a);
-    // a.className = "card";
-    // a.innerHTML = "<div class=\"card-header\">\n" +
-    //                    task.title +
-    //     "            </div>\n" +
-    //     "            <div class=\"card-body\">\n" +
-    //     "                <h5 class=\"card-title\">Special title treatment</h5>\n" +
-    //     "                <p class=\"card-text\">With supporting text below as a natural lead-in to additional content.</p>\n" +
-    //     "                <a href=\"#\" class=\"btn btn-primary\">Go somewhere</a>\n" +
-    //     "            </div>";
-    }
-
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById("addTaskBtn").addEventListener("click", createItem);
-});*/
