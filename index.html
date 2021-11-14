@@ -12,119 +12,33 @@
     <title>Exercise 2</title>
 </head>
 
-
-<body>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
 <body>
 <div class="container">
     <div  style="text-align:center" class="container-fluid "  >
     <img src="images/imagework.png" class="img-fluid" style="max-width:60%;" alt="to-do list">
-
+    </div>
     <h1 class="text-center">my TODO list</h1>
     <h3 class="text-center">Internet Programming course</h3>
     <button id="highPriorityOnlyBtn">Show High Priority</button>
     <button id="SortBtn">Sort</button>
 
-    <div  style="text-align:left" class="container-fluid">
-    <form>
+    <div style="text-align:left" class="container-fluid">
+    <form onsubmit="return false">
         <label for="inputTitle" class="form-label">Title</label>
-        <input type="title" class="form-control" id="inputTitle" placeholder="Title">
+        <input type="text" class="form-control" id="inputTitle" placeholder="Title">
         <label for="inputDescription" class="form-label">description</label>
-        <input type="title" class="form-control" id="inputDescription" placeholder="Title">
-
-        <form onsubmit="return false">
-        </form>
-
+        <input type="text" class="form-control" id="inputDescription" placeholder="description">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="highPriorityCheckBox">
+            <label class="form-check-label" for="highPriorityCheckBox">
+                High Priority
+            </label>
+        </div>
     <button id="addTaskBtn">Add</button>
     </form>
+    </div>
     <ol id="tasksList">
     </ol>
 </div>
-
-
-
-
-
-</div>
-
 </body>
-</html>
-
-
-<!--
-
-<div  style="text-align:center" class="container-fluid ">
-    <img src="images/imagework.png" class="img-fluid" style="max-width:60%;" alt="to-do list">
-    <h1 class="text-center">my TODO list</h1>
-    <div class="text-center">Internet Programming course</div>
-
-    <div class="container">
-        <button id="compact">Show High Priority</button>
-        <button id="details">Sort</button>
-    </div>
-</div>
-<form>
-
-
-<div class="mb-3" style="text-align: left">
-    <label for="title" class="form-label"> Title </label>
-    <input type="text" class="form-control" id="title"><br/>
-</div>
-
-<div class="mb-3" style="text-align: left">
-    <label for="description" class="form-label">Description </label>
-    <input type="text" class="form-control" id="description"
-           placeholder="type your to-do here">
-</div>
-
-<div class="mb-3 form-check" style="text-align: left">
-    <input type="checkbox" class="form-check-input" id="highPriority">
-    <label class="form-check-label" for="highPriority">High Priority</label>
-</div>
-<button id="addTaskBtn">Add</button>
-
-</form>
-
-<ol id="list1">
-</ol>
-
-&lt;!&ndash;        <li class="card">
-            <div class="card-header">
-                Featured
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </li>&ndash;&gt;
-
-
-&lt;!&ndash;        <li class="card">&ndash;&gt;
-&lt;!&ndash;            <h5 class="card-header">Featured</h5>&ndash;&gt;
-&lt;!&ndash;            <div class="card-body">&ndash;&gt;
-&lt;!&ndash;                <h5 class="card-title">Special title treatment</h5>&ndash;&gt;
-&lt;!&ndash;                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>&ndash;&gt;
-&lt;!&ndash;                <a href="#" class="btn btn-primary">Go somewhere</a>&ndash;&gt;
-&lt;!&ndash;            </div>&ndash;&gt;
-&lt;!&ndash;        </li>&ndash;&gt;
-&lt;!&ndash;        <li class="card">&ndash;&gt;
-&lt;!&ndash;            <h5 class="card-header">Featured</h5>&ndash;&gt;
-&lt;!&ndash;            <div class="card-body">&ndash;&gt;
-&lt;!&ndash;                <h5 class="card-title">Special title treatment</h5>&ndash;&gt;
-&lt;!&ndash;                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>&ndash;&gt;
-&lt;!&ndash;                <a href="#" class="btn btn-primary">Go somewhere</a>&ndash;&gt;
-&lt;!&ndash;            </div>&ndash;&gt;
-&lt;!&ndash;        </li>&ndash;&gt;
--->
-
-
-</body>
-
 </html>

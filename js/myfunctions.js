@@ -16,6 +16,10 @@ let listModule = ( () => {
     function separator() {
         return (", ");
     }
+    function isHighPriority(task)
+    {
+        return task.highPriority;
+    }
 
     // add more public method
     publicData.addTask = function (task) {
@@ -27,10 +31,13 @@ let listModule = ( () => {
     publicData.buildHTMLTaskList = function (printTitle, printDescription) {
         let result = "<h2>List of Tasks</h2><ol>";
         for (let t of tasks) {
-            result += "<div class=\"card\"" +
+            result += "<div class=\"card\">" +
                 "<div class=\"card-body\">" +
-                "<h5 className=\"card-title\">" + printTitle(t)+
-                "<p className=\"card-text\">" + printDescription(t);
+                "<h1 className=\"card-title\">" +
+                printTitle(t)+ "</h1>" +
+                "<p className=\"card-text\">" +
+                printDescription(t) + "</p>" +
+                "</div></div>";
         }
         result += "</ol><br>";
         return result;
@@ -40,9 +47,10 @@ let listModule = ( () => {
     // don't forget to name your classes with a UPPER CASE letter at the begining ("Course" and not "course")
 
     publicData.Task = class Task {
-        constructor(title, description) {
+        constructor(title, description, highPriority) {
             this.title = title;
             this.description = description;
+            this.highPriority = highPriority;
         }
 
     }
@@ -61,23 +69,20 @@ function printDescription(task) {
     return task.description;
 }
 
+function addTask(){
+    listModule.addTask(new listModule.Task(document.getElementById("inputTitle").value,
+        document.getElementById("inputDescription").value,
+        document.getElementById("highPriorityCheckBox").checked));
+    document.getElementById("inputTitle").value = '';
+    document.getElementById("inputDescription").value = '';
+    document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList(printTitle, printDescription);
+}
+
 // TESTING OUR CODE
 // initialize the array of courses
 
 // PREPARE THE BUTTONS LISTENERS for testing
 // wait for the DOM before reaching elements
 document.addEventListener('DOMContentLoaded', (event) => {
-
-/*    document.getElementById("compact").addEventListener('click', function () {
-        document.getElementById("clist").innerHTML = listModule.buildHTMLCourseList(printCompact);
-    });
-
-    document.getElementById("details").addEventListener('click', function () {
-        document.getElementById("clist").innerHTML = listModule.buildHTMLCourseList(printFullDetails);
-    });*/
-    document.getElementById("addTaskBtn").addEventListener('click', function() {
-        listModule.addTask(new listModule.Task(document.getElementById("inputTitle").value,
-            document.getElementById("inputDescription").value));
-        document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList(printTitle, printDescription);
-    });
+    document.getElementById("addTaskBtn").addEventListener('click', addTask)
 });
