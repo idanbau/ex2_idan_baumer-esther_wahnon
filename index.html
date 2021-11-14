@@ -23,17 +23,28 @@
 </head>
 <body>
 <div class="container">
+    <div  style="text-align:center" class="container-fluid "  >
     <img src="images/imagework.png" class="img-fluid" style="max-width:60%;" alt="to-do list">
+
     <h1 class="text-center">my TODO list</h1>
     <h3 class="text-center">Internet Programming course</h3>
     <button id="highPriorityOnlyBtn">Show High Priority</button>
     <button id="SortBtn">Sort</button>
+
+        <div  style="text-align:left" class="container-fluid "  >
     <form>
         <label for="inputTitle" class="form-label">Title</label>
         <input type="title" class="form-control" id="inputTitle" placeholder="Title">
         <label for="inputDescription" class="form-label">description</label>
         <input type="title" class="form-control" id="inputDescription" placeholder="Title">
-    <button id="addTaskBtn">Add</button>
+
+        <form onsubmit="return false">
+        </form>
+
+    <button
+
+
+            id="addTaskBtn">Add</button>
     </form>
     <ol id="list1">
     </ol>
@@ -43,6 +54,7 @@
 
 
 
+</div>
 
 </body>
 </html>
