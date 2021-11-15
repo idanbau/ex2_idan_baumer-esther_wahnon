@@ -13,6 +13,30 @@ let listModule = ( () => {
     let publicData = {}
 
     // sample private/hidden method
+    function printCard(task) {
+        return "<li class=\"card " +
+            (task.highPriority ? "bg-danger\">" : "bg-light\">") +
+            "<div class=\"card-body\">" +
+            "<h1 class=\"card-title\">" +
+            task.title + "</h1>" +
+            "<p class=\"card-text\">" +
+            task.description + "</p>" +
+            "<button type=\"button\" class=\"btn btn-danger\">Delete</button>" +
+            "</div></li><p></p>";
+    }
+
+    function deleteCard(){
+        for(let i = 0; i < tasks.length; i++){
+            if(tasks[i].title === this.parentElement.firstElementChild.innerText &&
+            tasks[i].description === this.parentElement.children[1].innerText)
+            {
+                tasks.splice(i, 1);
+                break;
+            }
+        }
+        this.parentElement.parentElement.remove();
+    }
+
     function separator() {
         return (", ");
     }
@@ -25,21 +49,28 @@ let listModule = ( () => {
         tasks.sort((task1, task2) =>
         {return (task1.title < task2.title) ? 1 : -1});
     }
+    publicData.addDeleteListeners = function(){
+        document.querySelectorAll("ol > li > div > button").forEach(closeBtn =>{
+            closeBtn.addEventListener('click', deleteCard);
+        });
+    }
 
     // add more public method
     // here we build the HTML using the printFunc for a single course
-    publicData.buildHTMLTaskList = function (printTitle, printDescription, isHighPriority) {
+    publicData.buildHTMLTaskList = function () {
         let result = "<h2>List of Tasks</h2><ol>";
-        for (let t of tasks) {
-            result += "<div class=\"card " +
-                (isHighPriority(t) ? "bg-danger\">" : "bg-light\">") +
-            "<div class=\"card-body\">" +
-                "<h1 className=\"card-title\">" +
-                printTitle(t)+ "</h1>" +
-                "<p className=\"card-text\">" +
-                printDescription(t) + "</p>" +
-                "<button type=\"button\" class=\"btn btn-danger\">Delete</button>" +
-                "</div></div>";
+        for (const t of tasks) {
+            result += printCard(t);
+        }
+        result += "</ol><br>";
+        return result;
+    }
+    publicData.buildHTMLPriorityTaskList = function (isHighPriority){
+        let result = "<h2>List of Tasks</h2><ol>";
+        for (const t of tasks) {
+            if (isHighPriority(t)) {
+                result += printCard(t);
+            }
         }
         result += "</ol><br>";
         return result;
@@ -63,21 +94,7 @@ let listModule = ( () => {
 }) ();  // end of definition and building of our namespace - pay attention to the () here
 
 //create a couple print functions strategies
-function printTitle(task) {
-    return task.title;
-}
 
-function printDescription(task) {
-    return task.description;
-}
-
-function isHighPriority(task) {
-    return task.highPriority;
-}
-
-function printCard(task){
-    return ""
-}
 
 function addTask(){
     listModule.addTask(new listModule.Task(
@@ -87,21 +104,30 @@ function addTask(){
     document.getElementById("inputTitle").value = '';
     document.getElementById("inputDescription").value = '';
     document.getElementById("highPriorityCheckBox").checked = false;
-    document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList(printTitle,
-        printDescription, isHighPriority);
+    document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList();
+    listModule.addDeleteListeners();
 }
 
 function sort(){
     listModule.sort();
-    document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList(printTitle,
-        printDescription, isHighPriority);
+    document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList();
+}
+
+function highPriorityOnly(){
+/*    document.getElementById("sortBtn").hidden = true;
+    document.getElementById("highPriorityOnlyBtn").hidden = true;
+    document.getElementById("highPriorityOnlyBtn").hidden = true;*/
+    document.getElementById("menuBtn").hidden = true;
+    document.getElementById("tasksForm").hidden = true;
+    document.getElementById("tasksList").innerHTML = listModule.buildHTMLPriorityTaskList();
 }
 // TESTING OUR CODE
 // initialize the array of courses
 
 // PREPARE THE BUTTONS LISTENERS for testing
 // wait for the DOM before reaching elements
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("sortBtn").addEventListener('click', sort)
+    document.getElementById("highPriorityOnlyBtn").addEventListener('click', highPriorityOnly)
     document.getElementById("addTaskBtn").addEventListener('click', addTask)
 })
