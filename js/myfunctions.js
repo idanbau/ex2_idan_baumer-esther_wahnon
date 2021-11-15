@@ -16,27 +16,29 @@ let listModule = ( () => {
     function separator() {
         return (", ");
     }
-    function isHighPriority(task)
-    {
-        return task.highPriority;
-    }
 
     // add more public method
     publicData.addTask = function (task) {
         tasks.push(task);
     }
+    publicData.sort = function(){
+        tasks.sort((task1, task2) =>
+        {return (task1.title < task2.title) ? 1 : -1});
+    }
 
     // add more public method
     // here we build the HTML using the printFunc for a single course
-    publicData.buildHTMLTaskList = function (printTitle, printDescription) {
+    publicData.buildHTMLTaskList = function (printTitle, printDescription, isHighPriority) {
         let result = "<h2>List of Tasks</h2><ol>";
         for (let t of tasks) {
-            result += "<div class=\"card\">" +
-                "<div class=\"card-body\">" +
+            result += "<div class=\"card " +
+                (isHighPriority(t) ? "bg-danger\">" : "bg-light\">") +
+            "<div class=\"card-body\">" +
                 "<h1 className=\"card-title\">" +
                 printTitle(t)+ "</h1>" +
                 "<p className=\"card-text\">" +
                 printDescription(t) + "</p>" +
+                "<button type=\"button\" class=\"btn btn-danger\">Delete</button>" +
                 "</div></div>";
         }
         result += "</ol><br>";
@@ -69,20 +71,37 @@ function printDescription(task) {
     return task.description;
 }
 
+function isHighPriority(task) {
+    return task.highPriority;
+}
+
+function printCard(task){
+    return ""
+}
+
 function addTask(){
-    listModule.addTask(new listModule.Task(document.getElementById("inputTitle").value,
+    listModule.addTask(new listModule.Task(
+        document.getElementById("inputTitle").value,
         document.getElementById("inputDescription").value,
         document.getElementById("highPriorityCheckBox").checked));
     document.getElementById("inputTitle").value = '';
     document.getElementById("inputDescription").value = '';
-    document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList(printTitle, printDescription);
+    document.getElementById("highPriorityCheckBox").checked = false;
+    document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList(printTitle,
+        printDescription, isHighPriority);
 }
 
+function sort(){
+    listModule.sort();
+    document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList(printTitle,
+        printDescription, isHighPriority);
+}
 // TESTING OUR CODE
 // initialize the array of courses
 
 // PREPARE THE BUTTONS LISTENERS for testing
 // wait for the DOM before reaching elements
 document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById("sortBtn").addEventListener('click', sort)
     document.getElementById("addTaskBtn").addEventListener('click', addTask)
-});
+})
