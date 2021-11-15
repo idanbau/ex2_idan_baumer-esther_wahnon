@@ -13,6 +13,33 @@ let listModule = ( () => {
     let publicData = {}
 
     // sample private/hidden method
+    function printCard(task) {
+
+    if ( ! printTitle(task) || !printDescription(task))
+    {
+        return "<div class=\"card " +
+            "<h1 class=\"card-tittle\">" +
+            ( "\"please enter a non empty tittle with letters and digits only\"") +
+
+            "</div></div>";
+    }
+
+
+        return "<div class=\"card " +
+            (isHighPriority(task) ? "bg-danger\">" : "bg-light\">") +
+            "<div class=\"card-body\">" +
+            "<h1 class=\"card-title\">" +
+            ( printTitle(task)+ "</h1>") +
+            "<p class=\"card-text\">" +
+            (printDescription(task) + "</p>") +
+            "<button type=\"button\" class=\"btn btn-danger\">Delete</button>" +
+            "</div></div>";
+    }
+
+    function deleteCard(){
+        this.parentElement().delete();
+    }
+
     function separator() {
         return (", ");
     }
@@ -28,18 +55,20 @@ let listModule = ( () => {
 
     // add more public method
     // here we build the HTML using the printFunc for a single course
-    publicData.buildHTMLTaskList = function (printTitle, printDescription, isHighPriority) {
+    publicData.buildHTMLTaskList = function () {
         let result = "<h2>List of Tasks</h2><ol>";
-        for (let t of tasks) {
-            result += "<div class=\"card " +
-                (isHighPriority(t) ? "bg-danger\">" : "bg-light\">") +
-            "<div class=\"card-body\">" +
-                "<h1 className=\"card-title\">" +
-                printTitle(t)+ "</h1>" +
-                "<p className=\"card-text\">" +
-                printDescription(t) + "</p>" +
-                "<button type=\"button\" class=\"btn btn-danger\">Delete</button>" +
-                "</div></div>";
+        for (const t of tasks) {
+            result += printCard(t);
+        }
+        result += "</ol><br>";
+        return result;
+    }
+    publicData.buildHTMLPriorityTaskList = function (isHighPriority){
+        let result = "<h2>List of Tasks</h2><ol>";
+        for (const t of tasks) {
+            if (isHighPriority(t)) {
+                result += printCard(t);
+            }
         }
         result += "</ol><br>";
         return result;
@@ -64,10 +93,19 @@ let listModule = ( () => {
 
 //create a couple print functions strategies
 function printTitle(task) {
+
+    if ( task.title === "")
+        return false;
+
     return task.title;
 }
 
 function printDescription(task) {
+
+    if ( task.description === "")
+        return false;
+
+
     return task.description;
 }
 
@@ -75,11 +113,9 @@ function isHighPriority(task) {
     return task.highPriority;
 }
 
-function printCard(task){
-    return ""
-}
-
 function addTask(){
+
+
     listModule.addTask(new listModule.Task(
         document.getElementById("inputTitle").value,
         document.getElementById("inputDescription").value,
@@ -87,21 +123,25 @@ function addTask(){
     document.getElementById("inputTitle").value = '';
     document.getElementById("inputDescription").value = '';
     document.getElementById("highPriorityCheckBox").checked = false;
-    document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList(printTitle,
-        printDescription, isHighPriority);
+    document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList();
 }
 
 function sort(){
     listModule.sort();
-    document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList(printTitle,
-        printDescription, isHighPriority);
+    document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList();
+}
+
+function highPriorityOnly(){
+
+    document.getElementById("tasksList").innerHTML = listModule.buildHTMLPriorityTaskList(isHighPriority);
 }
 // TESTING OUR CODE
 // initialize the array of courses
 
 // PREPARE THE BUTTONS LISTENERS for testing
 // wait for the DOM before reaching elements
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("sortBtn").addEventListener('click', sort)
+    document.getElementById("highPriorityOnlyBtn").addEventListener('click', highPriorityOnly)
     document.getElementById("addTaskBtn").addEventListener('click', addTask)
 })
