@@ -14,30 +14,27 @@ let listModule = ( () => {
 
     // sample private/hidden method
     function printCard(task) {
-
-    if ( ! printTitle(task) || !printDescription(task))
-    {
-        return "<div class=\"card " +
-            "<h1 class=\"card-tittle\">" +
-            ( "\"please enter a non empty tittle with letters and digits only\"") +
-
-            "</div></div>";
-    }
-
-
-        return "<div class=\"card " +
-            (isHighPriority(task) ? "bg-danger\">" : "bg-light\">") +
+        return "<li class=\"card " +
+            (task.highPriority ? "bg-danger\">" : "bg-light\">") +
             "<div class=\"card-body\">" +
             "<h1 class=\"card-title\">" +
-            ( printTitle(task)+ "</h1>") +
+            task.title + "</h1>" +
             "<p class=\"card-text\">" +
-            (printDescription(task) + "</p>") +
+            task.description + "</p>" +
             "<button type=\"button\" class=\"btn btn-danger\">Delete</button>" +
-            "</div></div>";
+            "</div></li><p></p>";
     }
 
     function deleteCard(){
-        this.parentElement().delete();
+        for(let i = 0; i < tasks.length; i++){
+            if(tasks[i].title === this.parentElement.firstElementChild.innerText &&
+                tasks[i].description === this.parentElement.children[1].innerText)
+            {
+                tasks.splice(i, 1);
+                break;
+            }
+        }
+        this.parentElement.parentElement.remove();
     }
 
     function separator() {
@@ -51,6 +48,11 @@ let listModule = ( () => {
     publicData.sort = function(){
         tasks.sort((task1, task2) =>
         {return (task1.title < task2.title) ? 1 : -1});
+    }
+    publicData.addDeleteListeners = function(){
+        document.querySelectorAll("ol > li > div > button").forEach(closeBtn =>{
+            closeBtn.addEventListener('click', deleteCard);
+        });
     }
 
     // add more public method
@@ -92,30 +94,9 @@ let listModule = ( () => {
 }) ();  // end of definition and building of our namespace - pay attention to the () here
 
 //create a couple print functions strategies
-function printTitle(task) {
 
-    if ( task.title === "")
-        return false;
-
-    return task.title;
-}
-
-function printDescription(task) {
-
-    if ( task.description === "")
-        return false;
-
-
-    return task.description;
-}
-
-function isHighPriority(task) {
-    return task.highPriority;
-}
 
 function addTask(){
-
-
     listModule.addTask(new listModule.Task(
         document.getElementById("inputTitle").value,
         document.getElementById("inputDescription").value,
@@ -124,6 +105,7 @@ function addTask(){
     document.getElementById("inputDescription").value = '';
     document.getElementById("highPriorityCheckBox").checked = false;
     document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList();
+    listModule.addDeleteListeners();
 }
 
 function sort(){
@@ -132,8 +114,12 @@ function sort(){
 }
 
 function highPriorityOnly(){
-
-    document.getElementById("tasksList").innerHTML = listModule.buildHTMLPriorityTaskList(isHighPriority);
+    /*    document.getElementById("sortBtn").hidden = true;
+        document.getElementById("highPriorityOnlyBtn").hidden = true;
+        document.getElementById("highPriorityOnlyBtn").hidden = true;*/
+    document.getElementById("menuBtn").hidden = true;
+    document.getElementById("tasksForm").hidden = true;
+    document.getElementById("tasksList").innerHTML = listModule.buildHTMLPriorityTaskList();
 }
 // TESTING OUR CODE
 // initialize the array of courses

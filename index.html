@@ -18,16 +18,16 @@
     </div>
     <h1 class="text-center">my TODO list</h1>
     <h3 class="text-center">Internet Programming course</h3>
-    <div style="text-align:center" class="container-fluid">
-    <button id="highPriorityOnlyBtn">Show High Priority</button>
-    <button id="sortBtn">Sort</button>
-
+    <div id="menuBtn">
+        <button id="highPriorityOnlyBtn">Show High Priority</button>
+        <button id="sortBtn">Sort</button>
+    </div>
     <div style="text-align:left" class="container-fluid">
-        <form onsubmit="return false">
+        <form id="tasksForm" onsubmit="return false">
             <label for="inputTitle" class="form-label">Title</label>
             <input type="text" class="form-control" id="inputTitle" placeholder="Title">
             <label for="inputDescription" class="form-label">description</label>
-            <input type="text" class="form-control" id="inputDescription" placeholder="description">
+            <textarea class="form-control" id="inputDescription" placeholder="description"></textarea>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="highPriorityCheckBox">
                 <label class="form-check-label" for="highPriorityCheckBox">
