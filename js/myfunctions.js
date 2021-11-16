@@ -10,7 +10,7 @@ let listModule = ( () => {
 
     // this is the object we want to return (anything we add will be public/visible)
     // we're going to add methods and a class definition
-    let publicData = {}
+    let publicData = {};
 
     // sample private/hidden method
     function printCard(task) {
@@ -47,7 +47,7 @@ let listModule = ( () => {
     }
     publicData.sort = function(){
         tasks.sort((task1, task2) =>
-        {return (task1.title < task2.title) ? 1 : -1});
+        {return (task1.title > task2.title) ? 1 : -1});
     }
     publicData.addDeleteListeners = function(){
         document.querySelectorAll("ol > li > div > button").forEach(closeBtn =>{
@@ -65,10 +65,10 @@ let listModule = ( () => {
         result += "</ol><br>";
         return result;
     }
-    publicData.buildHTMLPriorityTaskList = function (isHighPriority){
+    publicData.buildHTMLPriorityTaskList = function (){
         let result = "<h2>List of Tasks</h2><ol>";
         for (const t of tasks) {
-            if (isHighPriority(t)) {
+            if (t.highPriority) {
                 result += printCard(t);
             }
         }
@@ -77,8 +77,6 @@ let listModule = ( () => {
     }
 
     // we are also defining a class in that namespace !
-    // don't forget to name your classes with a UPPER CASE letter at the begining ("Course" and not "course")
-
     publicData.Task = class Task {
         constructor(title, description, highPriority) {
             this.title = title;
@@ -114,13 +112,26 @@ function sort(){
 }
 
 function highPriorityOnly(){
-    /*    document.getElementById("sortBtn").hidden = true;
-        document.getElementById("highPriorityOnlyBtn").hidden = true;
-        document.getElementById("highPriorityOnlyBtn").hidden = true;*/
-    document.getElementById("menuBtn").hidden = true;
+    document.getElementById("highPriorityOnlyBtn").hidden = true;
+    document.getElementById("sortBtn").hidden = true;
     document.getElementById("tasksForm").hidden = true;
     document.getElementById("tasksList").innerHTML = listModule.buildHTMLPriorityTaskList();
+    let backBtn = document.createElement("button");
+    backBtn.id = "back-btn";
+    backBtn.appendChild(document.createTextNode("Back"));
+    document.getElementById("menuBtn").appendChild(backBtn);
+    backBtn.addEventListener('click', backToList);
 }
+
+function backToList()
+{
+    document.getElementById("back-btn").remove();
+    document.getElementById("highPriorityOnlyBtn").hidden = false;
+    document.getElementById("sortBtn").hidden = false;
+    document.getElementById("tasksForm").hidden = false;
+    document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList();
+}
+
 // TESTING OUR CODE
 // initialize the array of courses
 
