@@ -15,15 +15,17 @@ let listModule = ( () => {
     // sample private/hidden method
     function printCard(task) {
 
-        if ( !task.title || !task.description )
+        if (( !task.title || !task.description ) && !task.checkIfAppear)
         {
-            return "<div class=\"card " +  (task.highPriority ? "  bg-light \">" : "bg-danger\">") +
+            task.checkIfAppear =true ;
 
-                (" please enter a non empty tittle with letters and digits only") +
+            return "<div class=\"card " +  (task.highPriority ? "  bg-danger \">" : "bg-danger\">") +
 
+                (" please enter a non empty tittle with letters and digits only") +"<p class=\"card-text\">"+
 
-                "</div></div>";
+                "</div></li><p></p>";
         }
+
 
         return "<li class=\"card " +
             (task.highPriority ? "bg-danger\">" : "bg-light\">") +
@@ -69,14 +71,21 @@ let listModule = ( () => {
     // add more public method
     // here we build the HTML using the printFunc for a single course
     publicData.buildHTMLTaskList = function () {
+
+
         let result = "<h2>List of Tasks</h2><ol>";
-        for (const t of tasks) {
-            result += printCard(t);
+
+            for (const t of tasks) {
+
+                if(!t.checkIfAppear)
+                 result += printCard(t);
+            }
+            result += "</ol><br>";
+            return result;
         }
-        result += "</ol><br>";
-        return result;
-    }
+
     publicData.buildHTMLPriorityTaskList = function (){
+
         let result = "<h2>List of Tasks</h2><ol>";
         for (const t of tasks) {
             if (t.highPriority) {
@@ -89,10 +98,12 @@ let listModule = ( () => {
 
     // we are also defining a class in that namespace !
     publicData.Task = class Task {
-        constructor(title, description, highPriority) {
+        constructor(title, description, highPriority, checkIfAppear=false) {
             this.title = title;
             this.description = description;
             this.highPriority = highPriority;
+            this.checkIfAppear = checkIfAppear;
+
         }
 
     }
@@ -103,6 +114,8 @@ let listModule = ( () => {
 }) ();  // end of definition and building of our namespace - pay attention to the () here
 
 //create a couple print functions strategies
+
+
 
 
 function addTask(){
