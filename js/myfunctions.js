@@ -19,7 +19,7 @@ let listModule = ( () => {
         {
             return "<div class=\"card " +  (task.highPriority ? "  bg-light \">" : "bg-danger\">") +
 
-                ( "\"please enter a non empty tittle with letters and digits only\"") +  "\n"+
+                (" please enter a non empty tittle with letters and digits only") +
 
 
                 "</div></div>";
