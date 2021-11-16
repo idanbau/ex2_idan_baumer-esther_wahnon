@@ -14,6 +14,17 @@ let listModule = ( () => {
 
     // sample private/hidden method
     function printCard(task) {
+
+        if ( !task.title || !task.description )
+        {
+            return "<div class=\"card " +  (task.highPriority ? "  bg-light \">" : "bg-danger\">") +
+
+                ( "\"please enter a non empty tittle with letters and digits only\"") +  "\n"+
+
+
+                "</div></div>";
+        }
+
         return "<li class=\"card " +
             (task.highPriority ? "bg-danger\">" : "bg-light\">") +
             "<div class=\"card-body\">" +
