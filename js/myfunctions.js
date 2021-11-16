@@ -9,10 +9,10 @@ let listModule = ( () => {
     let tasks = [];
 
     // this is the object we want to return (anything we add will be public/visible)
-    // we're going to add methods and a class definition
     let publicData = {};
 
-    // sample private/hidden method
+    // private/hidden method
+    //function which get task and outputs the card it represents
     function printCard(task) {
         return "<li class=\"card " +
             (task.highPriority ? "bg-danger\">" : "bg-light\">") +
@@ -24,7 +24,7 @@ let listModule = ( () => {
             "<button type=\"button\" class=\"btn btn-danger\">Delete</button>" +
             "</div></li><br>";
     }
-
+    //function which handle the deletion of a specific card
     function deleteCard(){
         for(let i = 0; i < tasks.length; i++){
             if(tasks[i].title === this.parentElement.firstElementChild.innerText &&
@@ -37,18 +37,18 @@ let listModule = ( () => {
         this.parentElement.parentElement.remove();
     }
 
-    function separator() {
-        return (", ");
-    }
-
     // add more public method
+
+    //function which adds task to the tasks list
     publicData.addTask = function (task) {
         tasks.push(task);
     }
+    //function which sorts the tasks according to its titles
     publicData.sort = function(){
         tasks.sort((task1, task2) =>
         {return (task1.title > task2.title) ? 1 : -1});
     }
+    //function which delete a specific card
     publicData.addDeleteListeners = function(){
         document.querySelectorAll("ol > li > div > button").forEach(closeBtn =>{
             closeBtn.addEventListener('click', deleteCard);
@@ -56,15 +56,16 @@ let listModule = ( () => {
     }
 
     // add more public method
-    // here we build the HTML using the printFunc for a single course
+    // here we build the HTML using tasks card
     publicData.buildHTMLTaskList = function () {
-        let result = "";
+        let result = "<br>";
         for (const t of tasks) {
             result += printCard(t);
         }
         result += "<br>";
         return result;
     }
+    // here we build the HTML using the printFunc for a single high priority task
     publicData.buildHTMLPriorityTaskList = function (){
         let result = "<h2>List of Tasks</h2>";
         for (const t of tasks) {
@@ -91,9 +92,7 @@ let listModule = ( () => {
 
 }) ();  // end of definition and building of our namespace - pay attention to the () here
 
-//create a couple print functions strategies
-
-
+//this function handles add task button
 function addTask(){
     document.getElementById("errorMsg").hidden = true;
     const t = new listModule.Task(
@@ -113,6 +112,7 @@ function addTask(){
     listModule.addDeleteListeners();
 }
 
+//this function handle tasks sort button
 function sort(){
     document.getElementById("errorMsg").hidden = true;
     listModule.sort();
@@ -120,6 +120,7 @@ function sort(){
     listModule.addDeleteListeners();
 }
 
+//this function handle high Priority only button
 function highPriorityOnly(){
     document.getElementById("errorMsg").hidden = true;
     document.getElementById("highPriorityOnlyBtn").hidden = true;
@@ -134,6 +135,7 @@ function highPriorityOnly(){
     backBtn.addEventListener('click', backToList);
 }
 
+//this function handle back button when in only high priority view
 function backToList()
 {
     document.getElementById("back-btn").remove();
@@ -143,9 +145,6 @@ function backToList()
     document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList();
     listModule.addDeleteListeners();
 }
-
-// TESTING OUR CODE
-// initialize the array of courses
 
 // PREPARE THE BUTTONS LISTENERS for testing
 // wait for the DOM before reaching elements
