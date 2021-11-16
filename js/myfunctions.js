@@ -109,6 +109,7 @@ function addTask(){
 function sort(){
     listModule.sort();
     document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList();
+    listModule.addDeleteListeners();
 }
 
 function highPriorityOnly(){
@@ -116,6 +117,7 @@ function highPriorityOnly(){
     document.getElementById("sortBtn").hidden = true;
     document.getElementById("tasksForm").hidden = true;
     document.getElementById("tasksList").innerHTML = listModule.buildHTMLPriorityTaskList();
+    listModule.addDeleteListeners();
     let backBtn = document.createElement("button");
     backBtn.id = "back-btn";
     backBtn.appendChild(document.createTextNode("Back"));
@@ -130,6 +132,7 @@ function backToList()
     document.getElementById("sortBtn").hidden = false;
     document.getElementById("tasksForm").hidden = false;
     document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList();
+    listModule.addDeleteListeners();
 }
 
 // TESTING OUR CODE
