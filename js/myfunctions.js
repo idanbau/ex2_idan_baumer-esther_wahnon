@@ -14,19 +14,6 @@ let listModule = ( () => {
 
     // sample private/hidden method
     function printCard(task) {
-
-        if (( !task.title || !task.description ) && !task.checkIfAppear)
-        {
-            task.checkIfAppear =true ;
-
-            return "<div class=\"card " +  (task.highPriority ? "  bg-danger \">" : "bg-danger\">") +
-
-                (" please enter a non empty tittle with letters and digits only") +"<p class=\"card-text\">"+
-
-                "</div></li><p></p>";
-        }
-
-
         return "<li class=\"card " +
             (task.highPriority ? "bg-danger\">" : "bg-light\">") +
             "<div class=\"card-body\">" +
@@ -35,7 +22,7 @@ let listModule = ( () => {
             "<p class=\"card-text\">" +
             task.description + "</p>" +
             "<button type=\"button\" class=\"btn btn-danger\">Delete</button>" +
-            "</div></li><p></p>";
+            "</div></li><br>";
     }
 
     function deleteCard(){
@@ -71,39 +58,30 @@ let listModule = ( () => {
     // add more public method
     // here we build the HTML using the printFunc for a single course
     publicData.buildHTMLTaskList = function () {
-
-
-        let result = "<h2>List of Tasks</h2><ol>";
-
-            for (const t of tasks) {
-
-                if(!t.checkIfAppear)
-                 result += printCard(t);
-            }
-            result += "</ol><br>";
-            return result;
+        let result = "";
+        for (const t of tasks) {
+            result += printCard(t);
         }
-
+        result += "<br>";
+        return result;
+    }
     publicData.buildHTMLPriorityTaskList = function (){
-
-        let result = "<h2>List of Tasks</h2><ol>";
+        let result = "<h2>List of Tasks</h2>";
         for (const t of tasks) {
             if (t.highPriority) {
                 result += printCard(t);
             }
         }
-        result += "</ol><br>";
+        result += "<br>";
         return result;
     }
 
     // we are also defining a class in that namespace !
     publicData.Task = class Task {
-        constructor(title, description, highPriority, checkIfAppear=false) {
+        constructor(title, description, highPriority) {
             this.title = title;
             this.description = description;
             this.highPriority = highPriority;
-            this.checkIfAppear = checkIfAppear;
-
         }
 
     }
@@ -116,13 +94,18 @@ let listModule = ( () => {
 //create a couple print functions strategies
 
 
-
-
 function addTask(){
-    listModule.addTask(new listModule.Task(
+    document.getElementById("errorMsg").hidden = true;
+    const t = new listModule.Task(
         document.getElementById("inputTitle").value,
         document.getElementById("inputDescription").value,
-        document.getElementById("highPriorityCheckBox").checked));
+        document.getElementById("highPriorityCheckBox").checked);
+    if(t.title === "" || t.description === "")
+    {
+        document.getElementById("errorMsg").hidden = false;
+        return;
+    }
+    listModule.addTask(t);
     document.getElementById("inputTitle").value = '';
     document.getElementById("inputDescription").value = '';
     document.getElementById("highPriorityCheckBox").checked = false;
@@ -131,12 +114,14 @@ function addTask(){
 }
 
 function sort(){
+    document.getElementById("errorMsg").hidden = true;
     listModule.sort();
     document.getElementById("tasksList").innerHTML = listModule.buildHTMLTaskList();
     listModule.addDeleteListeners();
 }
 
 function highPriorityOnly(){
+    document.getElementById("errorMsg").hidden = true;
     document.getElementById("highPriorityOnlyBtn").hidden = true;
     document.getElementById("sortBtn").hidden = true;
     document.getElementById("tasksForm").hidden = true;
@@ -165,7 +150,9 @@ function backToList()
 // PREPARE THE BUTTONS LISTENERS for testing
 // wait for the DOM before reaching elements
 document.addEventListener('DOMContentLoaded', () => {
+
     document.getElementById("sortBtn").addEventListener('click', sort)
     document.getElementById("highPriorityOnlyBtn").addEventListener('click', highPriorityOnly)
     document.getElementById("addTaskBtn").addEventListener('click', addTask)
+    document.getElementById("errorMsg").hidden = true;
 })
